@@ -12,6 +12,10 @@ struct BookDetailView: View {
     var store: StoreOf<BookDetailFeature>
     
     var body: some View {
+        // WithViewStore는 Store를 ViewStore로 변경
+        // Q) Store vs ViewStore?
+        // @dynamicMemberLookup Store<State, Action>
+        // @dynamicMemberLookup ViewStore<ViewState, ViewAction>: ObservableObject
         WithViewStore(self.store, observe: { $0 }) { viewStore in
             GeometryReader { geometry in
                 ScrollView {
