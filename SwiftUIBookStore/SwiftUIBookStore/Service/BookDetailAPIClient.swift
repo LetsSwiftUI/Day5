@@ -13,6 +13,9 @@ struct BookDetailAPIClient {
 }
 
 // 메모 : Q. DependencyKey 란?
+// 의존성 주입을 구현하는 데 사용되는 키로 @Environment 속성 래퍼로 의존성을 주입하고 접근하는 데 사용
+// 환경(Environment) 주입 메커니즘을 기반으로 하여, 뷰 계층(View Hierarchy) 내에서 특정 종류의 의존성을 공유하고 접근
+// ex.) @Environment(\.myDependency) var myDependency: MyDependencyType
 extension BookDetailAPIClient: DependencyKey {
     
     static let liveValue = BookDetailAPIClient(
