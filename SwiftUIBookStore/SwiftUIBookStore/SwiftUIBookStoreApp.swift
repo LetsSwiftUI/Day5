@@ -20,6 +20,17 @@ struct SwiftUIBookStoreApp: App {
                 let environment = BookDetailAppEnvironment(apiClient: .liveValue, mainQueue: .main.eraseToAnyScheduler())
                 BookDetailFeature(environment: environment)
             })
+            
+            /*
+             store 주입 방법에 대한 고민..
+             WindowGroup {
+               SpeechRecognitionView(
+                 store: Store(initialState: SpeechRecognition.State()) {
+                   SpeechRecognition()._printChanges()
+                 }
+               )
+             }
+            */
         }
     }
 }
