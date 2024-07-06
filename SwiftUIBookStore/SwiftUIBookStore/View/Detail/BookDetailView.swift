@@ -42,8 +42,8 @@ struct BookDetailView: View {
                                 .fontWeight(.bold)
                         }
                         
-                        List {
-                            ForEach(viewStore.bookInfoList) { item in
+                        VStack {
+                            ForEach(viewStore.bookInfoList!) { item in
                                 BookDetailInnerView(title: item.category, content: item.content ?? "정보 없음")
                                 Spacer().frame(height: 10)
                             }
@@ -68,6 +68,9 @@ struct BookDetailView: View {
                 }
             }
             .navigationBarHidden(true)
+            .onAppear {
+                viewStore.send(.fetchDetails(BookDetail_API.Request(isbn13: "9781617294136")))
+            }
         }
         
     }
