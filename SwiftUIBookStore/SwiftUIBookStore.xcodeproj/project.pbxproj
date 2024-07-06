@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		29DEA76A2C39015900EE177C /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 29DEA7692C39015900EE177C /* ComposableArchitecture */; };
 		31E3F6952C3800D800A6E48B /* SwiftUIBookStoreApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31E3F6942C3800D800A6E48B /* SwiftUIBookStoreApp.swift */; };
 		31E3F69B2C3800D900A6E48B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 31E3F69A2C3800D900A6E48B /* Assets.xcassets */; };
 		31E3F69E2C3800D900A6E48B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 31E3F69D2C3800D900A6E48B /* Preview Assets.xcassets */; };
-		31E3F6A62C38043400A6E48B /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 31E3F6A52C38043400A6E48B /* ComposableArchitecture */; };
 		31E3F6A92C380B1F00A6E48B /* BookDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31E3F6A82C380B1F00A6E48B /* BookDetailView.swift */; };
 		31E3F6AD2C380D1300A6E48B /* BookDetailContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31E3F6AC2C380D1300A6E48B /* BookDetailContentView.swift */; };
 		31E3F6AF2C380D4F00A6E48B /* BookDetailFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31E3F6AE2C380D4F00A6E48B /* BookDetailFeature.swift */; };
@@ -53,7 +53,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				31E3F6A62C38043400A6E48B /* ComposableArchitecture in Frameworks */,
+				29DEA76A2C39015900EE177C /* ComposableArchitecture in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -181,7 +181,7 @@
 			);
 			name = SwiftUIBookStore;
 			packageProductDependencies = (
-				31E3F6A52C38043400A6E48B /* ComposableArchitecture */,
+				29DEA7692C39015900EE177C /* ComposableArchitecture */,
 			);
 			productName = SwiftUIBookStore;
 			productReference = 31E3F6912C3800D800A6E48B /* SwiftUIBookStore.app */;
@@ -212,7 +212,7 @@
 			);
 			mainGroup = 31E3F6882C3800D800A6E48B;
 			packageReferences = (
-				31E3F6A42C38043400A6E48B /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+				29DEA7682C39015900EE177C /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
 			);
 			productRefGroup = 31E3F6922C3800D800A6E48B /* Products */;
 			projectDirPath = "";
@@ -462,20 +462,20 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		31E3F6A42C38043400A6E48B /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
+		29DEA7682C39015900EE177C /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture.git";
+			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture?tab=readme-ov-file#what-is-the-composable-architecture";
 			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 1.11.0;
+				kind = exactVersion;
+				version = 1.11.2;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		31E3F6A52C38043400A6E48B /* ComposableArchitecture */ = {
+		29DEA7692C39015900EE177C /* ComposableArchitecture */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 31E3F6A42C38043400A6E48B /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			package = 29DEA7682C39015900EE177C /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
 			productName = ComposableArchitecture;
 		};
 /* End XCSwiftPackageProductDependency section */
