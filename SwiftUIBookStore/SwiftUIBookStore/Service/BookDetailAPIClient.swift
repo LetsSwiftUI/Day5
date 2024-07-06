@@ -20,10 +20,10 @@ extension BookDetailAPIClient: DependencyKey {
     
     static let liveValue = BookDetailAPIClient(
         fetchDetails: { request in
-            guard let url = URL(string: BaseURL.url + BookDetail_API.path) else {
+            guard let url = URL(string: BaseURL.url + BookDetail_API.path + request.isbn13) else {
                 throw APIError.networkError
             }
-            
+    
             // 메모 : Q. withCheckedThrowingContinuation란 ?
             // Swift의 비동기 프로그래밍 모델에서 사용되는 함수로, withCheckedContinuation 확장 버전.
             // async throws 에 유용하게 사용

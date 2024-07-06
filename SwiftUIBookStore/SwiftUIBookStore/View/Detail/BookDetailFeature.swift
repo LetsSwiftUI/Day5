@@ -22,7 +22,7 @@ struct BookDetailFeature {
     // 메모 : View -> Action -> Reducer
     enum Action {
         /// 책 상세 정보 API 요청
-        case fetchDetails(BookDetail_API.Request)
+        case fetchDetails(isbn13: String)
         /// 책 상세 정보 API 응답 처리
         case fetchDetailsResponse(Result<BookDetail_API.Response, APIError>)
         /// 뒤로가기 버튼
@@ -40,13 +40,12 @@ struct BookDetailFeature {
             case .backButtonTapped:
                 // TODO: 책 목록 화면으로 이동
                 return .none
-            case .fetchDetails(let request):
-                print("DEBUG: API 요청 > request = \(request)")
+            case .fetchDetails(let isbn13):
                 state.isLoading = true
                 state.errorMessage = nil
                 
                 return .run { send in
-                    let result = try await environment.apiClient.fetchDetails(request)
+                    let result = try await environment.apiClient.fetchDetails(.init(isbn13: isbn13))
                     await send(.fetchDetailsResponse(result))
                 }
             case let .fetchDetailsResponse(.success(details)):

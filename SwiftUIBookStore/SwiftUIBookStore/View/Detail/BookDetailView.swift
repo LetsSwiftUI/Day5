@@ -38,12 +38,12 @@ struct BookDetailView: View {
                                 .fontWeight(.bold)
                         }
                         
-                        List {
+                        VStack {
                             ForEach(viewStore.bookInfoList) { item in
                                 BookDetailInnerView(title: item.category, content: item.content ?? "정보 없음")
                                 Spacer().frame(height: 10)
                             }
-                        }
+                        }.frame(width: geometry.size.width - 34 * 2)
                         
                         Button(action: {
                             
@@ -65,6 +65,8 @@ struct BookDetailView: View {
             }
             .navigationBarHidden(true)
         }
-        
+        .onAppear {
+            store.send(.fetchDetails(isbn13: "9781617294136"))
+        }
     }
 }

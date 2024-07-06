@@ -15,9 +15,10 @@ struct BookDetailInnerView: View {
     var body: some View {
         HStack {
             Text(title)
-                .fontWeight(.bold)
+                .font(.system(size: 12, weight: .bold))
             Spacer()
             Text(content)
+                .font(.system(size: 12, weight: .regular))
         }
     }
 }
