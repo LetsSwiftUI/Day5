@@ -10,6 +10,7 @@ import ComposableArchitecture
 @Reducer
 struct BookDetailFeature {
     
+    //@ObservableState로 상태 변경 시 관찰 가능
     @ObservableState
     struct State: Equatable {
         var bookDetail: BookDetail_API.Response
@@ -31,12 +32,14 @@ struct BookDetailFeature {
     
     var environment: BookDetailAppEnvironment
     
+    //API 요청 및 응답처리, UI 상호작용 등을 처리
     var body: some ReducerOf<Self> {
         Reduce { state, action in
             switch action {
             case .backButtonTapped:
                 // TODO: 책 목록 화면으로 이동
                 return .none
+            //API 요청 시작, 로딩을 true, 오류메시지 초기화
             case .fetchDetails(let request):
                 print("DEBUG: API 요청 > request = \(request)")
                 state.isLoading = true
@@ -46,12 +49,15 @@ struct BookDetailFeature {
                     let result = try await environment.apiClient.fetchDetails(request)
                     await send(.fetchDetailsResponse(result))
                 }
+            //API 응답 성공 시, 로딩 false, 책 상세 정보 업데이트
+            //createBookInfoList()로 책 정보 리스트 생성
             case let .fetchDetailsResponse(.success(details)):
                 print("DEBUG: API 결과 > details = \(details)")
                 state.isLoading = false
                 state.bookDetail = details
                 state.bookInfoList = createBookInfoList(response: details)
                 return .none
+            //API 응답 실패 시, 로딩 false, 오류메시지 업데이트
             case let .fetchDetailsResponse(.failure(error)):
                 state.isLoading = false
                 state.errorMessage = error.localizedDescription
