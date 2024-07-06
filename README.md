@@ -44,8 +44,8 @@
 ## 화면 이미지
 책 목록 화면과 상세화면 이미지
 <p align="left">
-<img src = "https://github.com/Artsyork/Bookstore/assets/25509153/988b38cd-6a9f-4b65-866b-6ea8834ef87a" width="240" height="460">
-<img src = "https://github.com/Artsyork/Bookstore/assets/25509153/35d5072f-29eb-4b0e-94c2-96f436437e88" width="240" height="460">
+<img src = "https://github.com/LetsSwiftUI/Day5-6/assets/25509153/12e17c83-8b82-4974-9131-a117124afeec" width="240" height="460">
+<img src = "https://github.com/LetsSwiftUI/Day5-6/assets/25509153/7c1d6a62-98d3-4518-95a1-9e79ce7f05b4" width="240" height="460">
 </p>
 
 <br><br>
