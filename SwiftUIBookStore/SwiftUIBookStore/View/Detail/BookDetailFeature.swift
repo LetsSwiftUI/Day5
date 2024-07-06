@@ -10,6 +10,7 @@ import ComposableArchitecture
 @Reducer
 struct BookDetailFeature {
     
+    // 메모 : Reducer -> State -> View
     @ObservableState
     struct State: Equatable {
         var bookDetail: BookDetail_API.Response
@@ -18,6 +19,7 @@ struct BookDetailFeature {
         var errorMessage: String?
     }
     
+    // 메모 : View -> Action -> Reducer
     enum Action {
         /// 책 상세 정보 API 요청
         case fetchDetails(BookDetail_API.Request)
@@ -29,6 +31,7 @@ struct BookDetailFeature {
         case pdfButtonTapped
     }
     
+    // 메모 : Reducer -> Environment -> Effect
     var environment: BookDetailAppEnvironment
     
     var body: some ReducerOf<Self> {

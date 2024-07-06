@@ -26,6 +26,7 @@ struct AsyncImageView: View {
         }
     }
     
+    // TODO: 이미지가 없을 경우 이미지가 없다는 기본 이미지 넣기
     private func loadImage() {
         guard let url = url else { return }
         

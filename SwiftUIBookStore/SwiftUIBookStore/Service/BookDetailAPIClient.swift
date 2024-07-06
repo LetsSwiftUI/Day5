@@ -12,17 +12,25 @@ struct BookDetailAPIClient {
     var fetchDetails: (BookDetail_API.Request) async throws -> Result<BookDetail_API.Response, APIError>
 }
 
+// 메모 : Q. DependencyKey 란?
 extension BookDetailAPIClient: DependencyKey {
+    
     static let liveValue = BookDetailAPIClient(
         fetchDetails: { request in
             guard let url = URL(string: BaseURL.url + BookDetail_API.path) else {
                 throw APIError.networkError
             }
             
+            // 메모 : Q. withCheckedThrowingContinuation란 ?
+            // Swift의 비동기 프로그래밍 모델에서 사용되는 함수로, withCheckedContinuation 확장 버전.
+            // async throws 에 유용하게 사용
+            // 성공 시 continuation.resume(returning:) , 실패 시 continuation.resume(throwing:)
+            // 비동기 작업 실패 중
             return try await withCheckedThrowingContinuation { continuation in
                 URLSession.shared.dataTask(with: url) { data, response, error in
                     if let error = error {
-                        continuation.resume(returning: .failure(.etcError(error: error)))
+                        continuation.resume(throwing: error)
+                        //continuation.resume(returning: .failure(.etcError(error: error)))
                         return
                     }
                     
@@ -41,4 +49,5 @@ extension BookDetailAPIClient: DependencyKey {
             }
         }
     )
+    
 }
