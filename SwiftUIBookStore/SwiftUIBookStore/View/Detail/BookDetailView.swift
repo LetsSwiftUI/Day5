@@ -46,7 +46,7 @@ struct BookDetailView: View {
                         }
                         
                         Button(action: {
-                            
+                            viewStore.send(.fetchDetails(BookDetail_API.Request(isbn13: "")))
                         }) {
                             Text("Free eBook")
                                 .frame(maxWidth: .infinity)
