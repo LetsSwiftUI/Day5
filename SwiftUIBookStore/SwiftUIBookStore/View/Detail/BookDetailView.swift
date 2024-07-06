@@ -12,6 +12,7 @@ struct BookDetailView: View {
     var store: StoreOf<BookDetailFeature>
     
     var body: some View {
+        // store -> viewStore로 바꾸어줌
         WithViewStore(self.store, observe: { $0 }) { viewStore in
             GeometryReader { geometry in
                 ScrollView {
