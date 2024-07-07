@@ -13,8 +13,8 @@ struct BookDetailFeature {
     //@ObservableState로 상태 변경 시 관찰 가능
     @ObservableState
     struct State: Equatable {
-        var bookDetail: BookDetail_API.Response
-        var bookInfoList: [BookDetailInnerItem]
+        var bookDetail: BookDetail_API.Response = .mock()
+        var bookInfoList: [BookDetailInnerItem] = []
         var isLoading: Bool = false
         var errorMessage: String?
     }
