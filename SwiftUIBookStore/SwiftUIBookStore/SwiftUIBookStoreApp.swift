@@ -12,9 +12,12 @@ import ComposableArchitecture
 struct SwiftUIBookStoreApp: App {
     var body: some Scene {
         WindowGroup {
-            BookDetailView(store: Store(initialState: BookDetailFeature.State(bookDetail: .mock(), bookInfoList: [])) {
-                let environment = BookDetailAppEnvironment(apiClient: .liveValue, mainQueue: .main.eraseToAnyScheduler())
-                BookDetailFeature(environment: environment)
+            BookSearchView(store: Store(initialState: BookSearchFeature.State()) {
+                let environment = BookSearchAppEnvironment(searchApiClient: .liveValue,
+                                                           newApiClient: .liveValue,
+                                                           mainQueue: .main.eraseToAnyScheduler())
+                BookSearchFeature(environment: environment)
+                    ._printChanges()
             })
         }
     }

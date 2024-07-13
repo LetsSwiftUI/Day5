@@ -20,7 +20,7 @@ extension BookDetailAPIClient: DependencyKey {
     
     static let liveValue = BookDetailAPIClient(
         fetchDetails: { request in
-            guard let url = URL(string: BaseURL.url + BookDetail_API.path + request.isbn13) else {
+            guard let url = URL(string: BaseURL.url + BookDetail_API.endPoint + request.isbn13) else {
                 throw APIError.networkError
             }
     

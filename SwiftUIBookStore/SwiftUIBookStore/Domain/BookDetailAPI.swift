@@ -10,7 +10,7 @@ import Foundation
 /// API 모델 - 책 정보 상세 조회
 struct BookDetail_API: Codable {
     
-    static let path = "books/"
+    static let endPoint = "books/"
     
     struct Request: Codable {
         let isbn13: String

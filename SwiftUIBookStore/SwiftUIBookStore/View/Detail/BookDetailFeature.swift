@@ -15,8 +15,9 @@ struct BookDetailFeature {
     struct State: Equatable {
         var bookDetail: BookDetail_API.Response
         var bookInfoList: [BookDetailInnerItem]
+        var isbn: String
         var isLoading: Bool = false
-        var errorMessage: String?
+        var errorMessage: String? = nil
     }
     
     // 메모 : View -> Action -> Reducer

@@ -64,9 +64,9 @@ struct BookDetailView: View {
                 }
             }
             .navigationBarHidden(true)
-        }
-        .onAppear {
-            store.send(.fetchDetails(isbn13: "9781617294136"))
+            .onAppear {
+                store.send(.fetchDetails(isbn13: viewStore.isbn))
+            }
         }
     }
 }
