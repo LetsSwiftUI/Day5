@@ -16,13 +16,13 @@ struct BookDetailView: View {
             GeometryReader { geometry in
                 ScrollView {
                     VStack(alignment: .center, spacing: 20) {
-                        Text(viewStore.bookDetail.title ?? "책 정보 없음")
+                        Text(viewStore.bookDetail?.title ?? "책 정보 없음")
                             .font(.title)
                             .fontWeight(.bold)
                             .multilineTextAlignment(.center)
                             .padding(.horizontal)
                         
-                        if let imageString = viewStore.bookDetail.image,
+                        if let imageString = viewStore.bookDetail?.image,
                            let imageUrl = URL(string: imageString) {
                             let imageHeight = (geometry.size.height - geometry.safeAreaInsets.top - geometry.safeAreaInsets.bottom) / 2.5
                             AsyncImageView(url: imageUrl)
@@ -31,10 +31,10 @@ struct BookDetailView: View {
                         }
                         
                         HStack(spacing: 10) {
-                            Text(viewStore.bookDetail.rating ?? "-")
+                            Text(viewStore.bookDetail?.rating ?? "-")
                             Image(systemName: "star.fill")
                                 .foregroundColor(.yellow)
-                            Text(viewStore.bookDetail.price ?? "-")
+                            Text(viewStore.bookDetail?.price ?? "-")
                                 .fontWeight(.bold)
                         }
                         
@@ -57,7 +57,7 @@ struct BookDetailView: View {
                         }
                         .padding(.horizontal)
                         
-                        Text(viewStore.bookDetail.desc ?? "-")
+                        Text(viewStore.bookDetail?.desc ?? "-")
                             .padding(.horizontal)
                     }
                     .padding()
@@ -65,7 +65,7 @@ struct BookDetailView: View {
             }
             .navigationBarHidden(true)
             .onAppear {
-                store.send(.fetchDetails(isbn13: viewStore.isbn))
+                store.send(.fetchDetails)
             }
         }
     }

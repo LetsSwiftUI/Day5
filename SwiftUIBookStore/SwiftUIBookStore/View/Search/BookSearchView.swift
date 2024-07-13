@@ -9,7 +9,7 @@ import SwiftUI
 import ComposableArchitecture
 
 struct BookSearchView: View {
-    var store: StoreOf<BookSearchFeature>
+    @Bindable var store: StoreOf<BookSearchFeature>
     
     var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
@@ -46,12 +46,19 @@ struct BookSearchView: View {
                             viewStore.send(.selectBook(book: book))
                         }
                     }
-                    // ios 15이상
+                    /// ios 15이상
                     .searchable(text: viewStore.binding(get: \.searchKeyword, send: .fetchSearchList))
                     .navigationTitle("Books")
                     .onAppear { // 테이블뷰(list) 마지막 하단 아이템 출력 시 호출되는 메소드
                         viewStore.send(.fetchLoadBooks)
                     }
+                }
+            }
+            .fullScreenCover(
+                item: $store.scope(state: \.detailView, action: \.presentDetailPage)
+            ) { detailStore in
+                NavigationStack {
+                    BookDetailView(store: detailStore)
                 }
             }
         }

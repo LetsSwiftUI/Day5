@@ -19,7 +19,6 @@ struct BookSearchFeature {
         var page: Int = 0
         
         var searchKeyword = ""
-        var selectBookIsbn = ""
         var isLoading: Bool = false
         var errorMessage: String? = nil
         /// 메모 : @Present 란?
@@ -43,7 +42,8 @@ struct BookSearchFeature {
         case presentDetailPage(PresentationAction<BookDetailFeature.Action>)
     }
     
-    var environment: BookSearchAppEnvironment
+    @Dependency(\.searchApiClient) var searchEnvironment: BookSearchAPIClient
+    @Dependency(\.newApiClient) var newEnvironment: BookNewAPIClient
     
     var body: some ReducerOf<Self> {
         Reduce { state, action in
@@ -56,7 +56,7 @@ struct BookSearchFeature {
                 state.errorMessage = nil
                 
                 return .run { send in
-                    let result = try await environment.newApiClient.fetchNewBookInfoList(.init())
+                    let result = try await newEnvironment.fetchNewBookInfoList(.init())
                     await send(.fetchNewResponse(result))
                 }
                 
@@ -66,7 +66,7 @@ struct BookSearchFeature {
                 state.errorMessage = nil
                 
                 return .run { send in
-                    let result = try await environment.searchApiClient.fetchSearchBookInfoList(searchRequest)
+                    let result = try await searchEnvironment.fetchSearchBookInfoList(searchRequest)
                     await send(.fetchSearchResponse(result))
                 }
                 
@@ -95,8 +95,8 @@ struct BookSearchFeature {
                 return .none
                 
             case .selectBook(let book):
-                state.selectBookIsbn = book.isbn13 ?? ""
-                return .none
+                state.detailView = BookDetailFeature.State(isbn: book.isbn13 ?? "")
+                return .send(.presentDetailPage(.presented(.fetchDetails)))
                 
 //            case .presentDetailPage(.presented()):
 //                state.detailView = nil
@@ -107,12 +107,14 @@ struct BookSearchFeature {
             }
         }
         .ifLet(\.$detailView, action: \.presentDetailPage) {
-            BookDetailFeature(environment: BookDetailAppEnvironment(apiClient: .liveValue, mainQueue: .main.eraseToAnyScheduler()))
+            BookDetailFeature()
         }
     }
     
 }
 
+/// 메모 : @DependencyClient 란? DependencyKey란?
+@DependencyClient
 struct BookSearchAppEnvironment {
     var searchApiClient: BookSearchAPIClient
     var newApiClient: BookNewAPIClient

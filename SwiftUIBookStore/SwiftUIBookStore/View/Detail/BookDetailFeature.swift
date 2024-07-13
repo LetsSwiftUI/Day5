@@ -13,8 +13,8 @@ struct BookDetailFeature {
     // 메모 : Reducer -> State -> View
     @ObservableState
     struct State: Equatable {
-        var bookDetail: BookDetail_API.Response
-        var bookInfoList: [BookDetailInnerItem]
+        var bookDetail: BookDetail_API.Response?
+        var bookInfoList: [BookDetailInnerItem] = []
         var isbn: String
         var isLoading: Bool = false
         var errorMessage: String? = nil
@@ -23,7 +23,7 @@ struct BookDetailFeature {
     // 메모 : View -> Action -> Reducer
     enum Action {
         /// 책 상세 정보 API 요청
-        case fetchDetails(isbn13: String)
+        case fetchDetails
         /// 책 상세 정보 API 응답 처리
         case fetchDetailsResponse(Result<BookDetail_API.Response, APIError>)
         /// 뒤로가기 버튼
@@ -33,7 +33,7 @@ struct BookDetailFeature {
     }
     
     // 메모 : Reducer -> Environment -> Effect
-    var environment: BookDetailAppEnvironment
+    @Dependency(\.detailApiClient) var environment: BookDetailAPIClient
     
     var body: some ReducerOf<Self> {
         Reduce { state, action in
@@ -41,12 +41,13 @@ struct BookDetailFeature {
             case .backButtonTapped:
                 // TODO: 책 목록 화면으로 이동
                 return .none
-            case .fetchDetails(let isbn13):
+            case .fetchDetails:
+                let bookIsbn = state.isbn
                 state.isLoading = true
                 state.errorMessage = nil
                 
                 return .run { send in
-                    let result = try await environment.apiClient.fetchDetails(.init(isbn13: isbn13))
+                    let result = try await environment.fetchDetails(.init(isbn13: bookIsbn))
                     await send(.fetchDetailsResponse(result))
                 }
             case let .fetchDetailsResponse(.success(details)):

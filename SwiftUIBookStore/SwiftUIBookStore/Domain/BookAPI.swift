@@ -52,6 +52,10 @@ struct BookInfo: Codable, Hashable, Identifiable {
     let image: String?
     let url: String?
     
+    private enum CodingKeys: String, CodingKey {
+        case title, subtitle, isbn13, price, image, url
+    }
+    
     static func mock() -> Self {
         return .init(title: "Mock", subtitle: "Mock", isbn13: "0000", price: "Mock", image: nil, url: nil)
     }

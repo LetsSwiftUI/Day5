@@ -8,7 +8,21 @@
 import SwiftUI
 import ComposableArchitecture
 
-struct BookDetailAppEnvironment {
-    var apiClient: BookDetailAPIClient
-    var mainQueue: AnySchedulerOf<DispatchQueue>
+extension DependencyValues {
+    
+    var newApiClient: BookNewAPIClient {
+        get { self[BookNewAPIClient.self] }
+        set { self[BookNewAPIClient.self] = newValue }
+    }
+    
+    var searchApiClient: BookSearchAPIClient {
+        get { self[BookSearchAPIClient.self] }
+        set { self[BookSearchAPIClient.self] = newValue }
+    }
+    
+    var detailApiClient: BookDetailAPIClient {
+        get { self[BookDetailAPIClient.self] }
+        set { self[BookDetailAPIClient.self] = newValue }
+    }
+    
 }

@@ -30,6 +30,8 @@ extension BookNewAPIClient: DependencyKey {
                     return
                 }
                 
+                print("DEBUG: response Data = \(data)")
+                
                 do {
                     let response = try JSONDecoder().decode(BookNew_API.Response.self, from: data)
                     continuation.resume(returning: .success(response))
