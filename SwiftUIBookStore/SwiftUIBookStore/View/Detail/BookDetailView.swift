@@ -35,9 +35,7 @@ struct BookDetailView: View {
                     
                     if let imageString = store.bookDetail.image,
                        let imageUrl = URL(string: imageString) {
-                        let imageHeight = (geometry.size.height - geometry.safeAreaInsets.top - geometry.safeAreaInsets.bottom) / 2.5
                         AsyncImageView(url: imageUrl)
-                            .frame(width: geometry.size.width - 100*2, height: imageHeight)
                             .frame(height: 200)
                     }
                     
@@ -76,7 +74,7 @@ struct BookDetailView: View {
         }
         .navigationBarHidden(true)
         .onAppear {
-            store.send(.fetchDetails(BookDetail_API.Request(isbn13: "9781617294136")))
+            store.send(.fetchDetails(BookDetail_API.Request(isbn13: store.isbn13 ?? "")))
         }
         //}
         

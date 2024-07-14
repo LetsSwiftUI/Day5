@@ -13,10 +13,12 @@ struct BookDetailFeature {
     //@ObservableState로 상태 변경 시 관찰 가능
     @ObservableState
     struct State: Equatable {
-        var bookDetail: BookDetail_API.Response = .mock()
+        //Q).mock()일때 이전 이미지 mock값때문에 새로운 이미지가 안들어옴..
+        var bookDetail: BookDetail_API.Response = .null()
         var bookInfoList: [BookDetailInnerItem] = []
         var isLoading: Bool = false
         var errorMessage: String?
+        var isbn13: String?
     }
     
     enum Action {
