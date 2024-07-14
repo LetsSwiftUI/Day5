@@ -34,14 +34,16 @@ struct BookDetailContentInnerView: View {
                 AsyncImageView(url: imageUrl)
                     .frame(height: 100)
             }
-            
-            VStack {
+            Spacer()
+            VStack(alignment: .leading) {
+                Spacer()
                 Text(title)
                     .fontWeight(.bold)
                 Spacer()
                 Text(isbn13)
+                Spacer()
             }
-            
+            Spacer()
             Text(price)
             
         }
