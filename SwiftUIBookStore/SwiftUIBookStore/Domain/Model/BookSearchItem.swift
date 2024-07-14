@@ -7,8 +7,8 @@
 
 import Foundation
 
-/// 책 상세 내용 테이블 셀 모델
-struct BookDetailContentInnerItem: Codable, Hashable, Identifiable {
+/// 책 검색 테이블 셀 모델
+struct BookSearchItem: Codable, Hashable, Identifiable {
     var id = UUID()
     
     let image: String?

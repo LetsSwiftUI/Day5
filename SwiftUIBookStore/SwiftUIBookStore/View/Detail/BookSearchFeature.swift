@@ -8,18 +8,19 @@
 import ComposableArchitecture
 
 @Reducer
-struct BookDetailContentFeature {
+struct BookSearchFeature {
     
     //@ObservableState로 상태 변경 시 관찰 가능
     @ObservableState
     struct State: Equatable {
         var bookDetail: Book_API.Response = .mock()
-        var bookInfoList: [BookDetailContentInnerItem] = []
+        var bookInfoList: [BookSearchItem] = []
         var isLoading: Bool = false
         var errorMessage: String?
         
         var searchText = ""
-        @Presents var selectBook: BookDetailFeature.State?
+        
+        var path = StackState<BookDetailFeature.State>()
     }
     
     enum Action: BindableAction {
@@ -30,8 +31,8 @@ struct BookDetailContentFeature {
         /// 책 검색 정보 API 응답 처리
         case fetchDetailsResponse(Result<Book_API.Response, APIError>)
         
-        case selectBook(PresentationAction<BookDetailFeature.Action>)
         case selectBookTap(isbn13: String)
+        case path(StackAction<BookDetailFeature.State, BookDetailFeature.Action>)
     }
     
     var environment: BookDetailContentAppEnvironment
@@ -39,9 +40,17 @@ struct BookDetailContentFeature {
     //API 요청 및 응답처리, UI 상호작용 등을 처리
     var body: some ReducerOf<Self> {
         BindingReducer()
+//            .onChange(of: \.searchText) { old, new in
+//            Reduce { state, action in
+//                print("old, new", old, new)
+//                return .none
+//            }
+//        }
         
         Reduce { state, action in
             switch action {
+            case .path:
+                return .none
                 //searchText - API 요청 시작, 로딩을 true, 오류메시지 초기화
                 //Q) searchText가 2번씩 들어옴
             case .binding(\.searchText):
@@ -70,26 +79,23 @@ struct BookDetailContentFeature {
                 state.isLoading = false
                 state.errorMessage = error.localizedDescription
                 return .none
-                
-            case .selectBook:
-                return .none
-                
             case .selectBookTap(let isbn13):
-                state.selectBook = BookDetailFeature.State(isbn13: isbn13)
+                state.path.append(BookDetailFeature.State(isbn13: isbn13))
                 return .none
             }
             
         }
-        //Q).ifLet이란?
-        .ifLet(\.$selectBook, action: \.selectBook) {
+        //Q).ifLet란?
+        //Q).forEach란?
+        .forEach(\.path, action: \.path) {
             let environment = BookDetailAppEnvironment(apiClient: .liveValue, mainQueue: .main.eraseToAnyScheduler())
             BookDetailFeature(environment: environment)
         }
         
     }
     
-    private func createBookInfoList(response: Book_API.Response) -> [BookDetailContentInnerItem] {
-        var infoList: [BookDetailContentInnerItem] = []
+    private func createBookInfoList(response: Book_API.Response) -> [BookSearchItem] {
+        var infoList: [BookSearchItem] = []
         
         guard let books = response.books else {
             return []

@@ -8,13 +8,13 @@
 import Foundation
 import ComposableArchitecture
 
-struct BookDetailContentAPIClient {
+struct BookSearchAPIClient {
     var fetchSearch: (Book_API.Request) async throws ->
         Result<Book_API.Response, APIError>
 }
 
-extension BookDetailContentAPIClient: DependencyKey {
-    static let liveValue = BookDetailContentAPIClient(
+extension BookSearchAPIClient: DependencyKey {
+    static let liveValue = BookSearchAPIClient(
         fetchSearch: { request in
             guard let url = URL(string: BaseURL.url + Book_API.path + request.query) else {
                 throw APIError.networkError

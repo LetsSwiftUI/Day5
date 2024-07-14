@@ -22,7 +22,7 @@ struct BookDetailInnerView: View {
     }
 }
 
-struct BookDetailContentInnerView: View {
+struct BookSearchItemView: View {
     let image: String
     let title: String
     let price: String

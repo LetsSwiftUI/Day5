@@ -14,6 +14,6 @@ struct BookDetailAppEnvironment {
 }
 
 struct BookDetailContentAppEnvironment {
-    var apiClient: BookDetailContentAPIClient
+    var apiClient: BookSearchAPIClient
     var mainQueue: AnySchedulerOf<DispatchQueue>
 }
