@@ -13,12 +13,12 @@ struct SwiftUIBookStoreApp: App {
     var body: some Scene {
         WindowGroup {
             //BookDetailView는 Store를 통해 상태를 관리
-            BookDetailView(
-                store: Store(initialState: BookDetailFeature.State()
+            BookDetailContentView(
+                store: Store(initialState: BookDetailContentFeature.State()
             ) {
                 //BookDetailAppEnvironment 환경설정
-                let environment = BookDetailAppEnvironment(apiClient: .liveValue, mainQueue: .main.eraseToAnyScheduler())
-                BookDetailFeature(environment: environment)
+                let environment = BookDetailContentAppEnvironment(apiClient: .liveValue, mainQueue: .main.eraseToAnyScheduler())
+                BookDetailContentFeature(environment: environment)
             })
         }
     }
