@@ -8,7 +8,8 @@
 import SwiftUI
 import ComposableArchitecture
 
-struct BookDetailAppEnvironment {
-    var apiClient: BookDetailAPIClient
+struct BookAppEnvironment {
+    var bookListAPIClient: BookListAPIClient
+    var bookDetailAPIClient: BookDetailAPIClient
     var mainQueue: AnySchedulerOf<DispatchQueue>
 }

@@ -29,7 +29,7 @@ struct BookDetailFeature {
         case pdfButtonTapped
     }
     
-    var environment: BookDetailAppEnvironment
+    var environment: BookAppEnvironment
     
     var body: some ReducerOf<Self> {
         Reduce { state, action in
@@ -43,7 +43,7 @@ struct BookDetailFeature {
                 state.errorMessage = nil
                 
                 return .run { send in
-                    let result = try await environment.apiClient.fetchDetails(request)
+                    let result = try await environment.bookDetailAPIClient.fetchDetails(request)
                     await send(.fetchDetailsResponse(result))
                 }
             case let .fetchDetailsResponse(.success(details)):

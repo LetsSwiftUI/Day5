@@ -13,7 +13,7 @@ struct SwiftUIBookStoreApp: App {
     var body: some Scene {
         WindowGroup {
             BookDetailView(store: Store(initialState: BookDetailFeature.State(bookDetail: .mock(), bookInfoList: [])) {
-                let environment = BookDetailAppEnvironment(apiClient: .liveValue, mainQueue: .main.eraseToAnyScheduler())
+                let environment = BookAppEnvironment(bookListAPIClient: .liveValue, bookDetailAPIClient: .liveValue, mainQueue: .main.eraseToAnyScheduler())
                 BookDetailFeature(environment: environment)
             })
         }

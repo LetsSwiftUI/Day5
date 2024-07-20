@@ -43,7 +43,8 @@ extension Book_API.Response: EntityResponseProtocol {
 }
 
 /// 책 정보
-struct BookInfo: Codable, Hashable {
+struct BookInfo: Codable, Hashable, Identifiable {
+    var id: String { isbn13 ?? UUID().uuidString }
     let title: String?
     let subtitle: String?
     let isbn13: String?
