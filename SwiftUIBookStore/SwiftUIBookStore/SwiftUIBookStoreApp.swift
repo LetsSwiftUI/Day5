@@ -16,9 +16,7 @@ struct SwiftUIBookStoreApp: App {
             BookSearchView(
                 store: Store(initialState: BookSearchFeature.State()
             ) {
-                //BookDetailAppEnvironment 환경설정
-                let environment = BookDetailContentAppEnvironment(apiClient: .liveValue, mainQueue: .main.eraseToAnyScheduler())
-                BookSearchFeature(environment: environment)
+                BookSearchFeature()
             })
         }
     }

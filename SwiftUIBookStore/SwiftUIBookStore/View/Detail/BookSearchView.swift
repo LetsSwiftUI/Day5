@@ -14,18 +14,38 @@ struct BookSearchView: View {
     var body: some View {
         NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
             ScrollView {
-                ForEach(store.bookInfoList) { item in
-                    BookSearchItemView(image: item.image ?? "", title: item.title ?? "", price: item.price ?? "", isbn13: item.isbn13 ?? "")
-                        .onTapGesture {
-                            store.send(.selectBookTap(isbn13: item.isbn13 ?? ""))
+                ForEach(store.bookDetail.books!, id: \.self) { item in
+                    HStack {
+                        if let imageString = item.image,
+                           let imageUrl = URL(string: imageString) {
+                            AsyncImageView(url: imageUrl)
+                                .frame(width: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/)
                         }
-                    Spacer().frame(height: 10)
+                        VStack(alignment: .leading) {
+                            Text(item.title ?? "")
+                                .fontWeight(.bold)
+                                .lineLimit(2)
+                            Text(item.subtitle ?? "")
+                                .lineLimit(2)
+                                .padding([.top, .bottom], 10)
+                                
+                            Text(item.isbn13 ?? "")
+                        }
+                        Text(item.price ?? "")
+                    }
+                    .padding(10)
+                    .onTapGesture {
+                        store.send(.selectBookTap(isbn13: item.isbn13 ?? ""))
+                    }
                 }
             }
             .searchable(text: $store.searchText)
             .navigationTitle("BookSearch")
         } destination: { store in
-            BookDetailView(store: store)
+            switch store.case {
+            case .selectBook(let store):
+                BookDetailView(store: store)
+            }
         }
         
     }

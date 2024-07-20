@@ -53,6 +53,7 @@ struct BookDetailView: View {
                             Spacer().frame(height: 10)
                         }
                     }
+                    .padding(.horizontal)
                     
                     Button(action: {
                         
@@ -72,7 +73,6 @@ struct BookDetailView: View {
                 .padding()
             }
         }
-        .navigationBarHidden(true)
         .onAppear {
             store.send(.fetchDetails(BookDetail_API.Request(isbn13: store.isbn13 ?? "")))
         }

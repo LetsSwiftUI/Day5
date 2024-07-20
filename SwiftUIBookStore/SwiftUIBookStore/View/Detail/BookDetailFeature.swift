@@ -32,7 +32,7 @@ struct BookDetailFeature {
         case pdfButtonTapped
     }
     
-    var environment: BookDetailAppEnvironment
+    @Dependency(\.bookDetailAppEnvironment) var bookDetailAppEnvironment
     
     //API 요청 및 응답처리, UI 상호작용 등을 처리
     var body: some ReducerOf<Self> {
@@ -48,7 +48,7 @@ struct BookDetailFeature {
                 state.errorMessage = nil
                 
                 return .run { send in
-                    let result = try await environment.apiClient.fetchDetails(request)
+                    let result = try await bookDetailAppEnvironment.fetchDetails(request)
                     await send(.fetchDetailsResponse(result))
                 }
             //API 응답 성공 시, 로딩 false, 책 상세 정보 업데이트

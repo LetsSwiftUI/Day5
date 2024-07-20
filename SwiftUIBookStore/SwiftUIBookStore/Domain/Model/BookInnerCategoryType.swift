@@ -8,7 +8,7 @@
 import Foundation
 
 /// 책 상세 내용 목록 타입
-enum BookInnerCategoryType: Int, CaseIterable {
+enum BookInnerCategoryType: Int {
     case language = 0
     case pages
     case year

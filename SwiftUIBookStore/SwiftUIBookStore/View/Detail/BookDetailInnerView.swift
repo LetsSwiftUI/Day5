@@ -21,32 +21,3 @@ struct BookDetailInnerView: View {
         }
     }
 }
-
-struct BookSearchItemView: View {
-    let image: String
-    let title: String
-    let price: String
-    let isbn13: String
-    
-    var body: some View {
-        HStack {
-            if let imageUrl = URL(string: image) {
-                AsyncImageView(url: imageUrl)
-                    .frame(height: 100)
-            }
-            Spacer()
-            VStack(alignment: .leading) {
-                Spacer()
-                Text(title)
-                    .fontWeight(.bold)
-                Spacer()
-                Text(isbn13)
-                Spacer()
-            }
-            Spacer()
-            Text(price)
-            
-        }
-        
-    }
-}
