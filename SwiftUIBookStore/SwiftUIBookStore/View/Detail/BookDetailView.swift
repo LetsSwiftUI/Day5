@@ -35,8 +35,7 @@ struct BookDetailView: View {
                     
                     if let imageString = store.bookDetail.image,
                        let imageUrl = URL(string: imageString) {
-                        AsyncImageView(url: imageUrl)
-                            .frame(height: 200)
+                        AsyncImageView(url: imageUrl , height: 200)
                     }
                     
                     HStack(spacing: 10) {

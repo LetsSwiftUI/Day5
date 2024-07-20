@@ -18,8 +18,7 @@ struct BookSearchView: View {
                     HStack {
                         if let imageString = item.image,
                            let imageUrl = URL(string: imageString) {
-                            AsyncImageView(url: imageUrl)
-                                .frame(width: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/)
+                            AsyncImageView(url: imageUrl, height: 100)
                         }
                         VStack(alignment: .leading) {
                             Text(item.title ?? "")
@@ -28,7 +27,7 @@ struct BookSearchView: View {
                             Text(item.subtitle ?? "")
                                 .lineLimit(2)
                                 .padding([.top, .bottom], 10)
-                                
+                            
                             Text(item.isbn13 ?? "")
                         }
                         Text(item.price ?? "")

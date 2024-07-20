@@ -14,7 +14,8 @@ struct BookDetailFeature {
     @ObservableState
     struct State: Equatable {
         //Q).mock()일때 이전 이미지 mock값때문에 새로운 이미지가 안들어옴..
-        var bookDetail: BookDetail_API.Response = .null()
+        //A)AsyncImage 쓰니까 해결 
+        var bookDetail: BookDetail_API.Response = .mock()
         var bookInfoList: [BookDetailInnerItem] = []
         var isLoading: Bool = false
         var errorMessage: String?

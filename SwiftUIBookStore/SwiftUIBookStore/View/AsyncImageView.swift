@@ -8,38 +8,18 @@
 import SwiftUI
 
 struct AsyncImageView: View {
-    @State private var uiImage: UIImage?
     let url: URL?
+    var height: CGFloat?
     
     var body: some View {
-        Group {
-            if let uiImage = uiImage {
-                Image(uiImage: uiImage)
-                    .resizable()
-                    .scaledToFit()
-            } else {
-                ProgressView()
-                    .onAppear {
-                        loadImage()
-                    }
-            }
+        AsyncImage(url: url) { image in
+            image
+                .resizable()
+                .scaledToFit()
+        } placeholder: {
+            ProgressView()
         }
-    }
-    
-    private func loadImage() {
-        guard let url = url else { return }
-        
-        Task {
-            if let data = try? await fetchImageData(from: url),
-               let uiImage = UIImage(data: data) {
-                self.uiImage = uiImage
-            }
-        }
-    }
-    
-    private func fetchImageData(from url: URL) async throws -> Data? {
-        let (data, _) = try await URLSession.shared.data(from: url)
-        return data
+        .frame(height: height)
     }
     
 }
