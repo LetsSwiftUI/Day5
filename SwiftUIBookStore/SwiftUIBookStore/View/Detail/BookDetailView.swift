@@ -63,7 +63,6 @@ struct BookDetailView: View {
                     .padding()
                 }
             }
-            .navigationBarHidden(true)
             .onAppear {
                 store.send(.fetchDetails)
             }

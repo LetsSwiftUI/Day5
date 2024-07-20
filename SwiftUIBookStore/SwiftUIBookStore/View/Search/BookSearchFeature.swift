@@ -98,9 +98,9 @@ struct BookSearchFeature {
                 state.detailView = BookDetailFeature.State(isbn: book.isbn13 ?? "")
                 return .send(.presentDetailPage(.presented(.fetchDetails)))
                 
-//            case .presentDetailPage(.presented()):
-//                state.detailView = nil
-//                return .none
+            case .presentDetailPage(.presented(.backButtonTapped)):
+                state.detailView = nil
+                return .none
                 
             case .presentDetailPage(_):
                 return .none

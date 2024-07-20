@@ -14,7 +14,7 @@ struct BookSearchView: View {
     var body: some View {
         WithViewStore(self.store, observe: { $0 }) { viewStore in
             GeometryReader { geometry in
-                NavigationView {
+                NavigationStack {
                     List(viewStore.bookResponse) { (book: BookInfo) in
                         HStack {
                             if let imageString = book.image,
@@ -52,15 +52,31 @@ struct BookSearchView: View {
                     .onAppear { // 테이블뷰(list) 마지막 하단 아이템 출력 시 호출되는 메소드
                         viewStore.send(.fetchLoadBooks)
                     }
+                    .navigationDestination(item: $store.scope(state: \.detailView, action: \.presentDetailPage)) { detailStore in
+                        BookDetailView(store: detailStore)
+                    }
+                    
+                    /// 아래 안됨!
+//                    NavigationLink("Detail") {
+//                        if let detailView = self.store.scope(state: \.detailView, action: \.presentDetailPage) {
+//                            BookDetailView(store: detailView)
+//                        }
+//                    }
+                    
+                    /// 아래 안됨!!
+//                    NavigationLink("Detail", destination: IfLetStore(
+//                        self.store.scope(state: \.detailView, action: \.presentDetailPage),
+//                        then: BookDetailView.init(store:)))
                 }
             }
-            .fullScreenCover(
-                item: $store.scope(state: \.detailView, action: \.presentDetailPage)
-            ) { detailStore in
-                NavigationStack {
-                    BookDetailView(store: detailStore)
-                }
-            }
+            /// 기존 코드 (뒤로가기 안됨)
+//            .fullScreenCover(
+//                item: $store.scope(state: \.detailView, action: \.presentDetailPage)
+//            ) { detailStore in
+//                NavigationStack {
+//                    BookDetailView(store: detailStore)
+//                }
+//            }
         }
     }
 }
