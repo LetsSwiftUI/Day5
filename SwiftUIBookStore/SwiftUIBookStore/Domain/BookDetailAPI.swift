@@ -33,6 +33,25 @@ struct BookDetail_API: Codable {
         let image: String?
         let url: String?
         let pdf: [String: String]?
+        
+        init(error: String?, title: String?, subtitle: String?, authors: String?, publisher: String?, language: String?, isbn10: String?, isbn13: String?, pages: String?, year: String?, rating: String?, desc: String?, price: String?, image: String?, url: String?, pdf: [String : String]?) {
+            self.error = error
+            self.title = title
+            self.subtitle = subtitle
+            self.authors = authors
+            self.publisher = publisher
+            self.language = language
+            self.isbn10 = isbn10
+            self.isbn13 = isbn13
+            self.pages = pages
+            self.year = year
+            self.rating = rating
+            self.desc = desc
+            self.price = price
+            self.image = image
+            self.url = url
+            self.pdf = pdf
+        }
     }
     
 }
@@ -73,5 +92,9 @@ extension BookDetail_API.Response: EntityResponseProtocol {
                         "Chapter 5": "https://itbook.store/files/9781617294136/chapter5.pdf"
                      ])
     }
+    
+//    static func detail(isbs13: String) -> Self {
+//        return .init(error: <#T##String?#>, title: <#T##String?#>, subtitle: <#T##String?#>, authors: <#T##String?#>, publisher: <#T##String?#>, language: <#T##String?#>, isbn10: <#T##String?#>, isbn13: <#T##String?#>, pages: <#T##String?#>, year: <#T##String?#>, rating: <#T##String?#>, desc: <#T##String?#>, price: <#T##String?#>, image: <#T##String?#>, url: <#T##String?#>, pdf: <#T##[String : String]?#>)
+//    }
     
 }

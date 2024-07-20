@@ -78,7 +78,6 @@ struct BookDetailView: View {
                         }
                     }
                 }
-                .navigationBarHidden(true)
             } // geometry reader end
         } // view store end
     }// body end
