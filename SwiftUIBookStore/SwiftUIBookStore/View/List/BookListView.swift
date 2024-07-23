@@ -9,7 +9,7 @@ import SwiftUI
 import ComposableArchitecture
 
 struct BookListView: View {
-    var store: StoreOf<BookListFeature>
+    @Bindable var store: StoreOf<BookListFeature>
     
     @ViewBuilder func bookRow(proxy:GeometryProxy, book: BookInfo) -> some View {
         VStack {
@@ -51,35 +51,29 @@ struct BookListView: View {
         .padding(.horizontal)
     }
     
-    @ViewBuilder var detailView: some View {
-        BookDetailView(store: Store(initialState: BookDetailFeature.State(bookDetail: .mock(), bookInfoList: [])) {
-            
-            // 외부와의 통신을 위해 생성하는 environment 객체 -> 큐를 지정하는 부분이 흥미롭다.
-            // environment 선언, 사용법에 대해 추후 더 자세히 살펴봐야겠다.
-            let environment = BookDetailAppEnvironment(apiClient: .liveValue, mainQueue: .main.eraseToAnyScheduler())
-            BookDetailFeature(environment: environment)
-        })
-    }
-    
     var body: some View {
-        NavigationView {
+        NavigationStack(path: $store.scope(state: \.path, action: \.path)) {
             GeometryReader { proxy in
                 WithPerceptionTracking {
                     VStack {
-                        
-                        VStack {
-                            Text("search bar")
-                        }
-                        .frame(maxWidth: .infinity)
-                        .padding(.top)
-                        .border(.black)
-                        
                         // book list
                         ScrollView {
                             ForEach(store.books, id: \.hashValue) { book in
-                                NavigationLink(destination: detailView) {
+                                Button(action: {
+                                    if let isbn13 = book.isbn13 {
+                                        store.send(.detailButtonTapped(isbn13: isbn13))
+                                    }
+                                }) {
                                     bookRow(proxy: proxy, book: book)
                                 }
+                                
+                                if let isbn13 = book.isbn13 {
+                                    NavigationLink(state: BookListFeature.Path.State.bookDetail(BookDetailFeature.State(isbn13: isbn13))) {
+                                        bookRow(proxy: proxy, book: book)
+                                    }
+                                }
+                                    
+                                
                             }
                         } // scroll view end
                     } // vstack end
@@ -88,7 +82,14 @@ struct BookListView: View {
                     }
                 }
             } // geometry reader end
+        } destination: { store in
+            // NavigationLink에서 Feature.Path.State.bookDetail이라고 명시해줬기 때문에 여기에서 알아서 store를 주입해줄 수 있는건가? (action은 따로 명시해주지 않았지만..)
+            switch store.case {
+            case .bookDetail(let store): BookDetailView(store: store)
+            default: Text("unknown destination")
+            }
         }
+        .searchable(text: $store.searchText.sending(\.searchTextChanged))
     }
 }
 

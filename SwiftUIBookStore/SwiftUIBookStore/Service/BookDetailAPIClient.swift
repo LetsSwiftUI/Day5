@@ -8,6 +8,7 @@
 import Foundation
 import ComposableArchitecture
 
+@DependencyClient
 struct BookDetailAPIClient {
     var fetchDetails: (BookDetail_API.Request) async throws -> Result<BookDetail_API.Response, APIError>
 }
@@ -41,4 +42,13 @@ extension BookDetailAPIClient: DependencyKey {
             }
         }
     )
+}
+
+extension DependencyValues {
+    var BookDetailClient: BookDetailAPIClient {
+        get { self[BookDetailAPIClient.self]}
+        set {
+            self[BookDetailAPIClient.self] = newValue
+        }
+    }
 }

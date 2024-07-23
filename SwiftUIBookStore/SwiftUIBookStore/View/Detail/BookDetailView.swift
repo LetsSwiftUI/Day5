@@ -12,19 +12,17 @@ struct BookDetailView: View {
     var store: StoreOf<BookDetailFeature>
     
     var body: some View {
-    // store -> viewStore로 바꾸어줌
-        WithViewStore(self.store, observe: { $0 }) { viewStore in
             GeometryReader { geometry in
                 WithPerceptionTracking{
-                    let isbn13 = viewStore.bookDetail.isbn13
+                    let isbn13 = store.isbn13
                     VStack(alignment: .center, spacing: 20) {
-                        Text(viewStore.bookDetail.title ?? "책 정보 없음")
+                        Text(store.bookDetail.title ?? "")
                             .font(.title)
                             .fontWeight(.bold)
                             .multilineTextAlignment(.center)
                             .padding(.horizontal)
                     
-                        if let imageString = viewStore.bookDetail.image,
+                        if let imageString = store.bookDetail.image,
                            let imageUrl = URL(string: imageString) {
                             let imageHeight = (geometry.size.height - geometry.safeAreaInsets.top - geometry.safeAreaInsets.bottom) / 2.5
                             AsyncImageView(url: imageUrl)
@@ -33,15 +31,15 @@ struct BookDetailView: View {
                         }
                     
                         HStack(spacing: 10) {
-                            Text(viewStore.bookDetail.rating ?? "-")
+                            Text(store.bookDetail.rating ?? "-")
                             Image(systemName: "star.fill")
                                 .foregroundColor(.yellow)
-                            Text(viewStore.bookDetail.price ?? "-")
+                            Text(store.bookDetail.price ?? "-")
                                 .fontWeight(.bold)
                         }
                     
                         List {
-                            ForEach(viewStore.bookInfoList) { item in
+                            ForEach(store.bookInfoList) { item in
                                 BookDetailInnerView(title: item.category, content: item.content ?? "정보 없음")
                             }
                         }
@@ -58,27 +56,25 @@ struct BookDetailView: View {
                         }
                         .padding(.horizontal)
                         
-                        Text(viewStore.bookDetail.desc ?? "-")
+                        Text(store.bookDetail.desc ?? "-")
                             .padding(.horizontal)
                     }
                     .padding()
                     .overlay (
                         VStack {
-                            if viewStore.isLoading {
+                            if store.isLoading {
                                 ZStack {
                                     Color.gray.opacity(0.3)
+                                    ProgressView()
                                 }
                                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                             }
                         }.frame(maxWidth: .infinity, maxHeight: .infinity)
                     )
                     .onAppear {
-                        if let isbn13Value = isbn13 {
-                            viewStore.send(.fetchDetails(BookDetail_API.Request(isbn13: isbn13Value)))
-                        }
+                        store.send(.fetchDetails(BookDetail_API.Request(isbn13: isbn13)))
                     }
                 }
             } // geometry reader end
-        } // view store end
     }// body end
 }

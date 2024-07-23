@@ -34,6 +34,25 @@ struct BookDetail_API: Codable {
         let url: String?
         let pdf: [String: String]?
         
+        init() {
+            self.error = nil
+            self.title = nil
+            self.subtitle = nil
+            self.authors = nil
+            self.publisher = nil
+            self.language = nil
+            self.isbn10 = nil
+            self.isbn13 = nil
+            self.pages = nil
+            self.year = nil
+            self.rating = nil
+            self.desc = nil
+            self.price = nil
+            self.image = nil
+            self.url = nil
+            self.pdf = nil
+        }
+        
         init(error: String?, title: String?, subtitle: String?, authors: String?, publisher: String?, language: String?, isbn10: String?, isbn13: String?, pages: String?, year: String?, rating: String?, desc: String?, price: String?, image: String?, url: String?, pdf: [String : String]?) {
             self.error = error
             self.title = title

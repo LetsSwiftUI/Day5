@@ -12,8 +12,9 @@ struct BookDetailFeature {
     
     @ObservableState
     struct State: Equatable {
-        var bookDetail: BookDetail_API.Response
-        var bookInfoList: [BookDetailInnerItem]
+        var isbn13: String = ""
+        var bookDetail: BookDetail_API.Response = BookDetail_API.Response()
+        var bookInfoList: [BookDetailInnerItem] = []
         var isLoading: Bool = true
         var errorMessage: String?
     }
@@ -29,7 +30,8 @@ struct BookDetailFeature {
         case pdfButtonTapped
     }
     
-    var environment: BookDetailAppEnvironment
+//    var environment: BookDetailAppEnvironment
+    @Dependency(\.BookDetailClient) var bookDetailClient
     
     var body: some ReducerOf<Self> {
         Reduce { state, action in
@@ -43,7 +45,7 @@ struct BookDetailFeature {
                 state.errorMessage = nil
                 
                 return .run { send in
-                    let result = try await environment.apiClient.fetchDetails(request)
+                    let result = try await bookDetailClient.fetchDetails(request)
                     await send(.fetchDetailsResponse(result))
                 }
             case let .fetchDetailsResponse(.success(details)):
