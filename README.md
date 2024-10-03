@@ -1,5 +1,5 @@
 
-# 🍎 이제는하자 SwiftUI Day 5~6
+# 🍎 이제는하자 SwiftUI Day 5~7
 
 ### 학습목표 
 - TCA 데이터 흐름 이해하기
